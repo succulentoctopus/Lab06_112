@@ -12,6 +12,7 @@ import java.awt.GradientPaint;
 //challenges:
 // 1. animate stars: make stars twinkle / random shooting stars
 // 2. change gradient of sunset
+// 3. make the code as efficient as possible
 
 public class Skyline extends JPanel{
     public static final int WIDTH=1024;
@@ -40,9 +41,24 @@ public class Skyline extends JPanel{
         Random rand = new Random();
         //Your code here
 
+        //stars
+        // animate
+        // shooting star
+        g.setColor(Color.WHITE);
+        for (int i = 0; i < 300; i++) {
+            g.fillOval(rand.nextInt(1024), rand.nextInt(768), 1, 1) ;
+        }
+
+        //star cluster
+        int xStartPoint = rand.nextInt(1024);
+        int yStartPoint = rand.nextInt(248) + 520;
+        for (int i = 0; i < 100; i++) {
+            g.fillOval((int)(xStartPoint*rand.nextGaussian()), (int)(yStartPoint*rand.nextGaussian()), 1, 1);
+        }
+
         //horizon
         g.setColor(Color.GRAY);
-        int start = rand.nextInt(20) + 150;
+        int start = rand.nextInt(20) + 250;
         int placehold = start;
         g.fillRect(0, HEIGHT-(start), 1, start);
 
@@ -62,18 +78,6 @@ public class Skyline extends JPanel{
             g.fillRect(j, HEIGHT-(current), 1, current);
             placehold = current;
         }
-
-
-        //stars
-        // animate
-        // shooting star
-        g.setColor(Color.WHITE);
-        for (int i = 0; i < 170; i++) {
-            g.fillOval(rand.nextInt(1024), rand.nextInt(400), 1, 1) ;
-        }
-
-
-        //star cluster
 
     }
 }
