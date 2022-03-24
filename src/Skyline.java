@@ -17,6 +17,7 @@ import java.awt.GradientPaint;
 public class Skyline extends JPanel{
     public static final int WIDTH=1024;
     public static final int HEIGHT=768;
+    public int radius;
     public static void main(String[] args){
         JFrame frame = new JFrame("Skyline");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,6 +27,7 @@ public class Skyline extends JPanel{
     }
     public Skyline(){
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        radius = 1;
     }
 
     @Override
@@ -43,22 +45,35 @@ public class Skyline extends JPanel{
 
         //stars
         // animate
+        public void animate() {
+            while (true) {
+                if (radius < 2) {
+                    radius++;
+                }
+                if (radius > 4) {
+                    radius--;
+                }
+            }
+        }
+
         // shooting star
         g.setColor(Color.WHITE);
         for (int i = 0; i < 300; i++) {
-            g.fillOval(rand.nextInt(1024), rand.nextInt(768), 1, 1) ;
+            g.fillOval(rand.nextInt(1024), rand.nextInt(768), radius, radius) ;
         }
 
         //star cluster
-        int xStartPoint = rand.nextInt(1024);
-        int yStartPoint = rand.nextInt(248) + 520;
+        int xStartPoint = rand.nextInt(400)+300;
+        int yStartPoint = rand.nextInt(300) + 100;
         for (int i = 0; i < 100; i++) {
-            g.fillOval((int)(xStartPoint*rand.nextGaussian()), (int)(yStartPoint*rand.nextGaussian()), 1, 1);
+            int newLocationX = (int)(rand.nextGaussian()*(rand.nextInt(60)-30));
+            int newLocationY = (int)(rand.nextGaussian()*(rand.nextInt(60)-30));
+            g.fillOval(xStartPoint+newLocationX, yStartPoint+newLocationY, 1, 1);
         }
 
         //horizon
-        g.setColor(Color.GRAY);
-        int start = rand.nextInt(20) + 250;
+        g.setColor(Color.DARK_GRAY);
+        int start = rand.nextInt(20) + 350;
         int placehold = start;
         g.fillRect(0, HEIGHT-(start), 1, start);
 
@@ -68,8 +83,8 @@ public class Skyline extends JPanel{
             placehold = current;
         }
 
-        g.setColor(Color.DARK_GRAY);
-        start = rand.nextInt(20) + 350;
+        g.setColor(Color.GRAY);
+        start = rand.nextInt(20) + 250;
         g.fillRect(WIDTH, HEIGHT-start, 1, start);
         placehold = start;
 
